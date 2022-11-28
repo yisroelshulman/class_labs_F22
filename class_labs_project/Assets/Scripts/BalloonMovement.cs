@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BalloonMovement : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class BalloonMovement : MonoBehaviour
         {
             controller = GameObject.FindGameObjectWithTag("GameController");
         }
-        speed = 0.01F;
+        speed = 0.007F;
         InvokeRepeating("grow", startDelay, repeatDelay);
     }
 
@@ -43,6 +44,7 @@ public class BalloonMovement : MonoBehaviour
         if (counter == MAXPOINTS)
         {
             Destroy(gameObject);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
 

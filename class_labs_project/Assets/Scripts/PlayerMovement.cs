@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public int vSpeed = 6;
 	[SerializeField] bool isFacingRight = true;
     [SerializeField] GameObject Dart;
-
+    [SerializeField] AudioSource mAudio;
     
     private const float XOFFSETR = 0.5f;
     private const float XOFFSETL = -0.5f;
@@ -23,6 +23,10 @@ public class PlayerMovement : MonoBehaviour
     {
 		if (rigid == null)
 			rigid = GetComponent<Rigidbody2D>();
+        if (mAudio == null)
+        {
+            mAudio = GetComponent<AudioSource>();
+        }
     }
 
     // Update is called once per frame
@@ -49,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
     void spawnDart()
     {
-
+        AudioSource.PlayClipAtPoint(mAudio.clip, transform.position);
         float x = transform.position.x + XOFFSETL;
         if (isFacingRight)
         {

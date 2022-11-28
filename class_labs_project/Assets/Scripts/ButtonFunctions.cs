@@ -27,4 +27,9 @@ public class ButtonFunctions : MonoBehaviour
         PersistentData.Instance.SetName(s);
         SceneManager.LoadScene("Level1");
     }
+
+    public void saveSettings()
+    {
+        GameObject.FindGameObjectWithTag("VolumeSlider").GetComponent<Volume>().SetLevel();
+    }
 }
