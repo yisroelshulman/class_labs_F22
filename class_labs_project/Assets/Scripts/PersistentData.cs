@@ -6,6 +6,9 @@ public class PersistentData : MonoBehaviour
 {
     [SerializeField] string playerName;
     [SerializeField] int playerScore;
+    [SerializeField] bool isGameModeEasy;
+    [SerializeField] bool hasLevelReset;
+    [SerializeField] int birdCount;
 
     public static PersistentData Instance;
 
@@ -24,6 +27,9 @@ public class PersistentData : MonoBehaviour
     {
         playerName = "";
         playerScore = 0;
+        isGameModeEasy = true;
+        hasLevelReset = false;
+        birdCount = 0;
     }
 
     public void SetName(string name)
@@ -35,6 +41,21 @@ public class PersistentData : MonoBehaviour
         playerScore = score;
     }
 
+    public void SetGameModeEasy(bool easy)
+    {
+        isGameModeEasy = easy;
+    }
+
+    public void SetHasLevelReset(bool reset)
+    {
+        hasLevelReset = reset;
+    }
+
+    public void SetBirdCount(int count)
+    {
+        birdCount = count;
+    }
+
     public string GetName()
     {
         return playerName;
@@ -44,9 +65,19 @@ public class PersistentData : MonoBehaviour
     {
         return playerScore;
     }
-    // Update is called once per frame
-    void Update()
+
+    public bool GetGameModeEasy()
     {
-        
+        return isGameModeEasy;
+    }
+
+    public bool GetHasLevelReset()
+    {
+        return hasLevelReset;
+    }
+
+    public int GetBirdCount()
+    {
+        return birdCount;
     }
 }

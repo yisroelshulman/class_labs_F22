@@ -1,22 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rigid;
 	private float hMovement;
     private float vMovement;
-	public int hSpeed = 3;
+	public int hSpeed = 4;
     public int vSpeed = 6;
 	[SerializeField] bool isFacingRight = true;
     [SerializeField] GameObject Dart;
     [SerializeField] AudioSource mAudio;
     
-    private const float XOFFSETR = 0.5f;
-    private const float XOFFSETL = -0.5f;
+    
+    private const float YOFFSET = 0.5f;
+    private const float XOFFSETR = 0.2f;
+    private const float XOFFSETL = -0.2f;
     public float fireRate = 0.5F;
     private float nextFire = 0.0F;
+    private bool fire;
 
     // Start is called before the first frame update
     void Start()
@@ -35,11 +39,7 @@ public class PlayerMovement : MonoBehaviour
     {
 		hMovement = Input.GetAxis("Horizontal");
         vMovement = Input.GetAxis("Vertical");
-        if (Input.GetButton("Fire1") && Time.time > nextFire)
-        {
-            nextFire = Time.time + fireRate;
-            spawnDart();
-        }
+        fire = Input.GetButton("Fire1");
     }
 
     //called potentially multiple times per frame
@@ -49,6 +49,11 @@ public class PlayerMovement : MonoBehaviour
 		rigid.velocity = new Vector2(hMovement * hSpeed, vMovement * vSpeed);
 		if ((hMovement < 0 && isFacingRight) || (hMovement > 0 && !isFacingRight))
 			Flip();
+        if (fire && Time.time > nextFire)
+        {
+            nextFire = Time.time + fireRate;
+            spawnDart();
+        }
 	}
 
     void spawnDart()
@@ -59,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         {
             x = transform.position.x + XOFFSETR;
         }
-        float y = transform.position.y;
+        float y = transform.position.y + YOFFSET;
         Vector2 position = new Vector2(x, y);
         Instantiate(Dart, position, Quaternion.identity);
     }
@@ -74,5 +79,15 @@ public class PlayerMovement : MonoBehaviour
     public bool isMovingRight()
     {
         return isFacingRight;
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Bird")
+        {
+            PersistentData.Instance.SetHasLevelReset(true);
+            PersistentData.Instance.SetBirdCount(0);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
     }
 }

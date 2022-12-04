@@ -8,6 +8,8 @@ TagManager:
   - Balloon
   - Dart
   - VolumeSlider
+  - Pause
+  - Bird
   layers:
   - Default
   - TransparentFX

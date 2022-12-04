@@ -3,27 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class Volume : MonoBehaviour
 {
-    public AudioMixer mixer;
-    [SerializeField] Slider slider;
+    //public AudioMixer mixer;
+    //[SerializeField] Slider slider;
+    private AudioSource mAudio;
+    private float sliderValue;
+    private bool first;
+    private Vector2 soundPos = new Vector2(0.0f, 0.0f);
+    private GameObject slide;
+
     // Start is called before the first frame update
     void Start()
     {
-       
+       if (mAudio == null)
+        {
+            mAudio = GetComponent<AudioSource>();
+        }
+        first = true;
+        slide = GameObject.FindGameObjectWithTag("VolumeSlider");
+        slide.GetComponent<Slider>().value = AudioListener.volume;
     }
 
     // Update is called once per frame
     void Update()
     {
+      
     }
 
-    public void SetLevel()
+    public void SetVolume()
     {
-        float sliderValue = GameObject.FindGameObjectWithTag("VolumeSlider").GetComponent<Slider>().value;
-        AudioListener.volume = (sliderValue * 100) - 80;
-        SceneManager.LoadScene("MainMenu");
+        sliderValue = slide.GetComponent<Slider>().value;
+        AudioListener.volume = (sliderValue);
+        if (first)
+        {
+            first = false;
+            return;
+        }
+        AudioSource.PlayClipAtPoint(mAudio.clip, soundPos);
     }
 }

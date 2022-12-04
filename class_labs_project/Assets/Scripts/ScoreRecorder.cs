@@ -8,20 +8,18 @@ public class ScoreRecorder : MonoBehaviour
 {
     [SerializeField] int score;
     [SerializeField] TMP_Text scoreText;
-    //[SerializeField] Text sceneText;
+    [SerializeField] TMP_Text sceneText;
 
     const int DEFAULT_POINTS = 1;
-    //int level;
+    private int level;
     string playerName;
     // Start is called before the first frame update
     void Start()
     {
         score = PersistentData.Instance.GetScore();
         playerName = PersistentData.Instance.GetName();
-        DisplayScore();
-        
-        //level = SceneManager.GetActiveScene().buildIndex - 1;
-        //sceneText.text = "Level " + (level);
+        level = SceneManager.GetActiveScene().buildIndex;
+        DisplayScoreAndLevel();
     }
 
     // Update is called once per frame
@@ -34,12 +32,8 @@ public class ScoreRecorder : MonoBehaviour
     {
         score += pointsToAdd;
         PersistentData.Instance.SetScore(score);
-        DisplayScore();
-        //if (score >= (level) * SCORE_TO_ADVANCE)
-        //{
-            //move to the next level
-            //AdvanceLevel();
-        //}
+        DisplayScoreAndLevel();
+        //AdvanceLevel();
     }
 
     public void AddPoints()
@@ -52,8 +46,9 @@ public class ScoreRecorder : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public void DisplayScore()
+    public void DisplayScoreAndLevel()
     {
         scoreText.text = "Score: " + score;
+        sceneText.text = "Level " + level;
     }
 }
