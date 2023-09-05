@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class Volume : MonoBehaviour
 {
-    //public AudioMixer mixer;
-    //[SerializeField] Slider slider;
     private AudioSource mAudio;
     private float sliderValue;
     private bool first;
@@ -25,13 +23,7 @@ public class Volume : MonoBehaviour
         slide = GameObject.FindGameObjectWithTag("VolumeSlider");
         slide.GetComponent<Slider>().value = AudioListener.volume;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-      
-    }
-
+    
     public void SetVolume()
     {
         sliderValue = slide.GetComponent<Slider>().value;

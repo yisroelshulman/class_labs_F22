@@ -15,23 +15,6 @@ public class ButtonFunctions : MonoBehaviour
 
     private const string MAINMENU = "MainMenu";
 
-
-    public void MainMenu()
-    {
-        SceneManager.LoadScene(MAINMENU);
-    }
-
-    public void Unpause()
-    {
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<Pause>().Unpause();
-    }
-
-    public void PauseMainMenu()
-    {
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<Pause>().Unpause();
-        SceneManager.LoadScene(MAINMENU);
-    }
-
     public void PlayGame()
     {
         string s = playerNameInput.text;
@@ -73,5 +56,15 @@ public class ButtonFunctions : MonoBehaviour
     public void Instructions()
     {
         SceneManager.LoadScene("Instructions");
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(MAINMENU);
+    }
+
+    public void HighScores()
+    {
+        SceneManager.LoadScene("HighScores");
     }
 }
